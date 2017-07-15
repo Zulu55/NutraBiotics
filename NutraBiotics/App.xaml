@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:infra="clr-namespace:NutraBiotics.Infraestructure;assembly=NutraBiotics"
+    x:Class="NutraBiotics.App">
+	<Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Locator -->
+            <infra:InstanceLocator x:Key="Locator"/>
+
+            <!-- Colors -->
+            <Color x:Key="MainColor">#1A1626</Color>
+            <Color x:Key="FontColor">#0D000D</Color>
+            <Color x:Key="AccentColor1">#D0D2F2</Color>
+            <Color x:Key="AccentColor2">#3E3F59</Color>
+            <Color x:Key="BackgroundColor">#8183A6</Color>
+            
+        </ResourceDictionary>
+	</Application.Resources>
+</Application>

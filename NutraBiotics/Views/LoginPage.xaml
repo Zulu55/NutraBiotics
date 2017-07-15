@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="NutraBiotics.Views.LoginPage"
+    Title="Login"
+    BackgroundColor="{StaticResource BackgroundColor}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Padding>
+        <OnPlatform 
+            x:TypeArguments="Thickness" 
+            iOS="10,20,10,10" 
+            Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
+	<ContentPage.Content>
+        <ScrollView
+            BindingContext="{Binding Login}">
+            <StackLayout
+                Spacing="20">
+                <Image
+                    WidthRequest="300"
+                    Source="Logo.png">
+                </Image>
+                <Label
+                    TextColor="{StaticResource FontColor}"
+                    HorizontalOptions="Center"
+                    FontSize="Large"
+                    FontAttributes="Bold"
+                    Text="Ingreso al Sistema">
+                </Label>
+            </StackLayout>
+        </ScrollView>
+	</ContentPage.Content>
+</ContentPage>
