@@ -29,6 +29,83 @@
                     FontAttributes="Bold"
                     Text="Ingreso al Sistema">
                 </Label>
+                <StackLayout
+                    BackgroundColor="{StaticResource AccentColor1}"
+                    Spacing="12"
+                    Padding="20,10,20,10">
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Image
+                            Source="ic_email.png">
+                        </Image>
+                        <Entry
+                            Text="{Binding Email, Mode=TwoWay}"
+                            Keyboard="Email"
+                            HorizontalOptions="FillAndExpand"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+                            Placeholder="Ingrese su email...">
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Image
+                            Source="ic_lock.png">
+                        </Image>
+                        <Entry
+                            Text="{Binding Password, Mode=TwoWay}"
+                            IsPassword="true"
+                            HorizontalOptions="FillAndExpand"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+                            Placeholder="Ingrese su contraseña...">
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Switch
+                            IsToggled="{Binding IsRemembered, Mode=TwoWay}">
+                        </Switch>
+                        <Label
+                            VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            Text="Recordarme">
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                </ActivityIndicator>
+                <StackLayout
+                    Spacing="12"
+                    Padding="30,0,30,0">
+                    <Button
+                        Command="{Binding LoginCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        HeightRequest="40"
+                        BorderRadius="20"
+                        TextColor="White"
+                        BackgroundColor="{StaticResource AccentColor2}"
+                        Text="Ingresar">
+                    </Button>
+                    <Button
+                        Command="{Binding LoginFacebookCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        HeightRequest="40"
+                        BorderRadius="20"
+                        TextColor="White"
+                        BackgroundColor="Blue"
+                        Text="Ingresar con Facebook">
+                    </Button>
+                    <Label
+                        TextColor="White"
+                        HorizontalOptions="Center"
+                        Text="Olvide mi contraseña">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
 	</ContentPage.Content>
