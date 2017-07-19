@@ -3,16 +3,21 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using Models;
     using Services;
+    using Xamarin.Forms;
 
     public class LoginViewModel : INotifyPropertyChanged
     {
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
+		#endregion
 
-        #region Attributes
-        DialogService dialogService;
+		#region Attributes
+		DialogService dialogService;
+		ApiService apiService;
+        NetService netService;
+        NavigationService navigationService;
 		string email;
 		string password;
 		bool isRunning;
@@ -106,6 +111,11 @@
         public LoginViewModel()
         {
             dialogService = new DialogService();
+            apiService = new ApiService();
+            netService = new NetService();
+            navigationService = new NavigationService();
+
+            IsRemembered = true;
             IsEnabled = true;
         }
         #endregion
@@ -121,14 +131,46 @@
             if (string.IsNullOrEmpty(Email))
             {
                 await dialogService.ShowMessage("Error", "Debes ingresar un email.");
+                Password = null;
                 return;
             }
 
 			if (string.IsNullOrEmpty(Password))
 			{
 				await dialogService.ShowMessage("Error", "Debes ingresar una contraseña.");
+				Password = null;
 				return;
 			}
+
+            var connection = await netService.CheckConnectivity();
+            if (!connection.IsSuccess)
+            {
+				await dialogService.ShowMessage("Error", connection.Message);
+				return;
+			}
+
+			IsRunning = true;
+			IsEnabled = false;
+
+            var url = Application.Current.Resources["URLAPI"].ToString();
+            var response = await apiService.Login(url, "/api/users/login", 
+                Email, Password);
+
+            IsRunning = false;
+			IsEnabled = true;
+
+            if (!response.IsSuccess)
+            {
+				await dialogService.ShowMessage("Error", response.Message);
+				Password = null;
+				return;
+			}
+
+            Email = null;
+            Password = null;
+			
+            var user = (User)response.Result;
+            navigationService.SetMainPage("MasterPage");
 		}
         #endregion
 

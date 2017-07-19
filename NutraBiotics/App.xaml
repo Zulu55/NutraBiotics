@@ -10,6 +10,9 @@
             <!-- Locator -->
             <infra:InstanceLocator x:Key="Locator"/>
 
+            <!-- Parameters -->
+            <x:String x:Key="URLAPI">http://nutrabioticsbackend.azurewebsites.net</x:String>
+
             <!-- Colors -->
             <Color x:Key="MainColor">#1A1626</Color>
             <Color x:Key="FontColor">#0D000D</Color>

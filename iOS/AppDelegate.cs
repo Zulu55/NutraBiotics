@@ -14,6 +14,8 @@ namespace NutraBiotics.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
+            UISwitch.Appearance.OnTintColor = UIColor.Purple;
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

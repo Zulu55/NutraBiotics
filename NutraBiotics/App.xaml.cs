@@ -5,12 +5,19 @@
 
 	public partial class App : Application
     {
+        public static NavigationPage Navigator
+        {
+            get;
+            set;
+        }
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
-        }
+			MainPage = new LoginPage();
+			//MainPage = new MasterPage();
+		}
 
         protected override void OnStart()
         {
