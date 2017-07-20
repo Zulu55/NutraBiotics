@@ -2,23 +2,46 @@
 {
     using Views;
 	using Xamarin.Forms;
+    using Services;
+    using Models;
+    using ViewModels;
 
 	public partial class App : Application
     {
+        #region Attributes
+        DataService dataService;
+        #endregion
+
+        #region Properties
         public static NavigationPage Navigator
         {
             get;
             set;
         }
+        #endregion
 
+        #region Constructors
         public App()
         {
             InitializeComponent();
 
-			MainPage = new LoginPage();
-			//MainPage = new MasterPage();
-		}
+            dataService = new DataService();
 
+            var user = dataService.First<User>(false);
+            if (user != null && user.IsRemembered)
+            {
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.User = user;
+                MainPage = new MasterPage();
+            }
+            else
+            {
+				MainPage = new LoginPage();
+			}
+        }
+        #endregion
+
+        #region Methods
         protected override void OnStart()
         {
             // Handle when your app starts
@@ -33,5 +56,6 @@
         {
             // Handle when your app resumes
         }
+        #endregion
     }
 }

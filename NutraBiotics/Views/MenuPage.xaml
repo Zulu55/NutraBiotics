@@ -2,6 +2,7 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="NutraBiotics.Views.MenuPage"
     Title="Menu"
     BackgroundColor="{StaticResource BackgroundColor}"
@@ -9,10 +10,19 @@
 	<ContentPage.Content>
         <StackLayout
             Padding="5,20,5,5">
-            <Image
-                WidthRequest="300"
-                Source="Logo.png">
-            </Image>
+            <controls:CircleImage 
+                Source="{Binding User.PictureFullPath}" 
+                Aspect="Fill"
+                WidthRequest="150"
+                HeightRequest="150">
+            </controls:CircleImage>
+            <Label
+                TextColor="White"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                FontSize="Large"
+                Text="{Binding User.FullName, StringFormat='Bienvenido: {0}'}">
+            </Label>
             <ListView
                 BackgroundColor="{StaticResource BackgroundColor}"
                 SeparatorVisibility="None"

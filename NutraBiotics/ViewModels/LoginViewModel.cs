@@ -11,13 +11,17 @@
     {
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Services
+        DialogService dialogService;
+        ApiService apiService;
+        NetService netService;
+		NavigationService navigationService;
+		DataService dataService;
 		#endregion
 
 		#region Attributes
-		DialogService dialogService;
-		ApiService apiService;
-        NetService netService;
-        NavigationService navigationService;
 		string email;
 		string password;
 		bool isRunning;
@@ -114,6 +118,7 @@
             apiService = new ApiService();
             netService = new NetService();
             navigationService = new NavigationService();
+            dataService = new DataService();
 
             IsRemembered = true;
             IsEnabled = true;
@@ -170,6 +175,14 @@
             Password = null;
 			
             var user = (User)response.Result;
+            user.IsRemembered = IsRemembered;
+            user.Password = Password;
+            dataService.DeleteAllAndInsert(user);
+
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.User = user;
+
             navigationService.SetMainPage("MasterPage");
 		}
         #endregion

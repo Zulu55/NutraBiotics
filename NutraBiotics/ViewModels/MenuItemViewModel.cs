@@ -6,12 +6,13 @@
 
 	public class MenuItemViewModel
     {
-        #region Attributes
-        NavigationService navigationService;
-        #endregion
+		#region Attributes
+		NavigationService navigationService;
+		DataService dataService;
+		#endregion
 
-        #region Properties
-        public string Icon
+		#region Properties
+		public string Icon
         {
             get;
             set;
@@ -34,6 +35,7 @@
         public MenuItemViewModel()
         {
             navigationService = new NavigationService();
+            dataService = new DataService();
         }
         #endregion
 
@@ -47,6 +49,9 @@
         {
             if (PageName == "LoginPage")
             {
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.User.IsRemembered = false;
+                dataService.Update(mainViewModel.User);
                 navigationService.SetMainPage("LoginPage");
             }
         }

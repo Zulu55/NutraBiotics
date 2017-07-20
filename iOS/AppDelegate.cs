@@ -14,9 +14,10 @@ namespace NutraBiotics.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            UISwitch.Appearance.OnTintColor = UIColor.Purple;
+            UISwitch.Appearance.OnTintColor = UIColor.FromRGB(81, 83, 106);
+            ImageCircle.Forms.Plugin.iOS.ImageCircleRenderer.Init();
 
-            LoadApplication(new App());
+			LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }
