@@ -18,6 +18,9 @@
 			var config = DependencyService.Get<IConfig>();
 			connection = new SQLiteConnection(config.Platform,
 				System.IO.Path.Combine(config.DirectoryDB, "Nutrabiotics.db3"));
+			connection.CreateTable<Contact>();
+			connection.CreateTable<Customer>();
+			connection.CreateTable<ShipTo>();
 			connection.CreateTable<User>();
 		}
 

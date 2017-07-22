@@ -18,6 +18,12 @@
             set;
         }
 
+        public DownloadViewModel Download
+        {
+            get;
+            set;
+        }
+
         public ObservableCollection<MenuItemViewModel> Menu
         {
             get;
@@ -54,14 +60,21 @@
         #region Methods
         void LoadMenu()
         {
-            Menu.Add(new MenuItemViewModel
-            {
-                Icon = "ic_people.png",
-                PageName = "CustomersPage",
-                Title = "Clientes",
-            });
+			Menu.Add(new MenuItemViewModel
+			{
+				Icon = "ic_cloud_download.png",
+				PageName = "DownloadPage",
+				Title = "Descargar Maestros",
+			});
 
-            Menu.Add(new MenuItemViewModel
+			Menu.Add(new MenuItemViewModel
+			{
+				Icon = "ic_people.png",
+				PageName = "CustomersPage",
+				Title = "Clientes",
+			});
+
+			Menu.Add(new MenuItemViewModel
             {
                 Icon = "ic_settings.png",
                 PageName = "SettingsPage",

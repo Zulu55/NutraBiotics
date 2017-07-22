@@ -45,7 +45,7 @@
             get { return new RelayCommand(Navigate); }
         }
 
-        void Navigate()
+        async void Navigate()
         {
             if (PageName == "LoginPage")
             {
@@ -54,6 +54,19 @@
                 dataService.Update(mainViewModel.User);
                 navigationService.SetMainPage("LoginPage");
             }
+            else
+            {
+                var mainViewModel = MainViewModel.GetInstance();
+
+                switch (PageName)
+                {
+                    case "DownloadPage":
+                        mainViewModel.Download = new DownloadViewModel();
+                        break;
+                }
+
+				await navigationService.Navigate(PageName);
+			}
         }
         #endregion
     }

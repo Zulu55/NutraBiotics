@@ -18,6 +18,12 @@
             get;
             set;
         }
+
+        public static MasterDetailPage Master
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constructors
