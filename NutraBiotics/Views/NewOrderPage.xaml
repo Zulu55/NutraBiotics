@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="NutraBiotics.Views.NewOrderPage"
+    Title="Nuevo Pedido"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+	<ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding NewOrder}"
+            Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2.2*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>    
+                
+                <Label
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    WidthRequest="80"
+                    TextColor="{StaticResource FontColor}"
+                    Text="Cliente">
+                </Label>           
+                <Entry
+                    IsEnabled="false"
+                    PlaceholderColor="{StaticResource FontColor}"
+                    Placeholder="Seleccione un cliente..."
+                    Grid.Row="0"
+                    Grid.Column="1">
+                </Entry>
+                <Image
+                    VerticalOptions="Center"
+                    Source="ic_search.png"
+                    Grid.Row="0"
+                    Grid.Column="2">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchCustomerCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    WidthRequest="80"
+                    TextColor="{StaticResource FontColor}"
+                    Text="Sucursal">
+                </Label>           
+                <Entry
+                    IsEnabled="false"
+                    PlaceholderColor="{StaticResource FontColor}"
+                    Placeholder="Seleccione una sucursal..."
+                    Grid.Row="1"
+                    Grid.Column="1">
+                </Entry>
+                <Image
+                    VerticalOptions="Center"
+                    Source="ic_search.png"
+                    Grid.Row="1"
+                    Grid.Column="2">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchShipToCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    WidthRequest="80"
+                    TextColor="{StaticResource FontColor}"
+                    Text="Contactos">
+                </Label>           
+                <Entry
+                    IsEnabled="false"
+                    PlaceholderColor="{StaticResource FontColor}"
+                    Placeholder="Seleccione un contacto..."
+                    Grid.Row="2"
+                    Grid.Column="1">
+                </Entry>
+                <Image
+                    VerticalOptions="Center"
+                    Source="ic_search.png"
+                    Grid.Row="2"
+                    Grid.Column="2">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchContactCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

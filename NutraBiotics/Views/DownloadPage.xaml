@@ -8,11 +8,29 @@
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
 	<ContentPage.Content>
         <StackLayout
-            BindingContext="Download">
+            Padding="20"
+            VerticalOptions="Center"
+            BindingContext="{Binding Download}">
+            <Slider
+                Value="{Binding Progress, Mode=TwoWay}">
+            </Slider>
+            <ActivityIndicator
+                IsRunning="{Binding IsRunning, Mode=TwoWay}">
+            </ActivityIndicator>
             <Label
-                FontSize="Large"
-                Text="Download Page">
+                HorizontalOptions="Center"
+                TextColor="{StaticResource FontColor}"
+                Text="{Binding Message, Mode=TwoWay}">
             </Label>
+            <Button
+                Command="{Binding DownloadCommand}"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                BackgroundColor="{StaticResource MainColor}"
+                HeightRequest="40"
+                BorderRadius="20"
+                TextColor="White"
+                Text="Iniciar Descarga">
+            </Button>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

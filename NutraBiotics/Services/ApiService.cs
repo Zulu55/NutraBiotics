@@ -1,7 +1,8 @@
 ﻿namespace NutraBiotics.Services
 {
     using System;
-	using System.Net.Http;
+    using System.Collections.Generic;
+    using System.Net.Http;
 	using System.Text;
 	using System.Threading.Tasks;
     using Models;
@@ -44,6 +45,42 @@
 				{
 					IsSuccess = true,
 					Result = user,
+				};
+			}
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
+		public async Task<Response> GetList<T>(
+			string urlBase,
+			string controller) 
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var response = await client.GetAsync(controller);
+                if (!response.IsSuccessStatusCode)
+                {
+					return new Response
+					{
+						IsSuccess = false,
+						Message = "No se pudo descargar.",
+					};
+				}
+
+				var answer = await response.Content.ReadAsStringAsync();
+                var list = JsonConvert.DeserializeObject<List<T>>(answer);
+				return new Response
+				{
+					IsSuccess = true,
+					Result = list,
 				};
 			}
             catch (Exception ex)

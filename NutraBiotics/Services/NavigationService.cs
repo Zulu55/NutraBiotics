@@ -1,4 +1,4 @@
-﻿namespace NutraBiotics.Services
+﻿﻿namespace NutraBiotics.Services
 {
     using System.Threading.Tasks;
     using Views;
@@ -24,10 +24,16 @@
 
             switch (pageName)
             {
-                case "DownloadPage":
-                    await App.Navigator.PushAsync(new DownloadPage());
-                    break;
-            }
+				case "DownloadPage":
+					await App.Navigator.PushAsync(new DownloadPage());
+					break;
+				case "NewOrderPage":
+					await App.Navigator.PushAsync(new NewOrderPage());
+					break;
+				case "SearchCustomerPage":
+					await App.Navigator.PushAsync(new SearchCustomerPage());
+					break;
+			}
         }
     }
 }

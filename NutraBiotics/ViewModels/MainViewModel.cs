@@ -1,10 +1,17 @@
-﻿namespace NutraBiotics.ViewModels
+﻿﻿namespace NutraBiotics.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
     using Models;
+    using Services;
 
     public class MainViewModel
     {
+        #region Services
+        NavigationService navigationService;
+        #endregion
+
         #region Properties
         public User User
         {
@@ -24,6 +31,18 @@
             set;
         }
 
+        public NewOrderViewModel NewOrder
+        {
+            get;
+            set;
+        }
+
+        public SearchCustomerViewModel SearchCustomer
+        {
+            get;
+            set;
+        }
+
         public ObservableCollection<MenuItemViewModel> Menu
         {
             get;
@@ -35,6 +54,8 @@
         public MainViewModel()
         {
             instance = this;
+
+            navigationService = new NavigationService();
 
             Login = new LoginViewModel();
 
@@ -101,6 +122,19 @@
                 PageName = "LoginPage",
                 Title = "Cerrar Sesión",
             });
+        }
+        #endregion
+
+        #region Commands
+        public ICommand NewOrderCommand
+        {
+            get { return new RelayCommand(GotoNewOrder); }
+        }
+
+        async void GotoNewOrder()
+        {
+            NewOrder = new NewOrderViewModel();
+            await navigationService.Navigate("NewOrderPage");
         }
         #endregion
     }

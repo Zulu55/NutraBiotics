@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="NutraBiotics.Views.SearchCustomerPage"
+    Title="Buscar Cliente"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+	<ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding SearchCustomer}"
+            Padding="5">
+            <ListView
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                BackgroundColor="{StaticResource AccentColor1}"
+                SeparatorVisibility="Default"
+                ItemsSource="{Binding Customers}"
+                HasUnevenRows="True">   
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <Grid>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                        </Grid.GestureRecognizers>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="2*"></ColumnDefinition>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                          <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label 
+                            Grid.Column="0"
+                            VerticalOptions="Center"
+                            FontAttributes="Bold"        
+                            TextColor="{StaticResource FontColor}"
+                            Text="{Binding Names}">
+                        </Label>                                    
+                        <Label 
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            FontAttributes="Bold"        
+                            TextColor="{StaticResource FontColor}"
+                            Text="{Binding City}">
+                        </Label>                                    
+                        <Image 
+                            Grid.Column="2"
+                            Source="ic_chevron_right.png">
+                        </Image>
+                      </Grid>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -44,6 +44,12 @@
     <EmbeddedResource Include="Views\DownloadPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\NewOrderPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SearchCustomerPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -79,12 +85,19 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ShipTo.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerResponse.cs" />
-    <Compile Include="Models\ShipToResponse.cs" />
     <Compile Include="Views\DownloadPage.xaml.cs">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DownloadViewModel.cs" />
+    <Compile Include="Views\NewOrderPage.xaml.cs">
+      <DependentUpon>NewOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\NewOrderViewModel.cs" />
+    <Compile Include="Views\SearchCustomerPage.xaml.cs">
+      <DependentUpon>SearchCustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\SearchCustomerViewModel.cs" />
+    <Compile Include="ViewModels\CustomerItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

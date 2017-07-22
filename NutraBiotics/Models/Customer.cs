@@ -1,6 +1,5 @@
 ﻿namespace NutraBiotics.Models
 {
-    using System.Collections.Generic;
 	using SQLite.Net.Attributes;
 
 	public class Customer
@@ -27,7 +26,7 @@
         public string TermsCode { get; set; }
 		
         public string Terms { get; set; }
-		
+
         public override int GetHashCode()
         {
             return CustomerId;

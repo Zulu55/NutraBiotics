@@ -6,6 +6,12 @@
     Title="Pedidos"
     BackgroundColor="{StaticResource AccentColor1}"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Command="{Binding NewOrderCommand}"
+            Icon="ic_add_circle_outline.png">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
 	<ContentPage.Content>
         <StackLayout
             VerticalOptions="Center"
