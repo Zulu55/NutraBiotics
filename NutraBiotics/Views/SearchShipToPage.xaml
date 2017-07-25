@@ -2,13 +2,13 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="NutraBiotics.Views.SearchCustomerPage"
-    Title="Buscar Cliente"
+    x:Class="NutraBiotics.Views.SearchShipToPage"
+    Title="Buscar Sucursal"
     BackgroundColor="{StaticResource AccentColor1}"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
 	<ContentPage.Content>
         <StackLayout
-            BindingContext="{Binding SearchCustomer}"
+            BindingContext="{Binding SearchShipTo}"
             Padding="5">
 
             <SearchBar
@@ -23,7 +23,7 @@
                 IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                 BackgroundColor="{StaticResource AccentColor1}"
                 SeparatorVisibility="Default"
-                ItemsSource="{Binding Customers}"
+                ItemsSource="{Binding ShipToes}"
                 IsGroupingEnabled="True"
                 GroupDisplayBinding="{Binding Key}"
                 GroupShortNameBinding="{Binding Key}"
@@ -36,7 +36,7 @@
                         <Label 
                             FontSize="Large" 
                             TextColor="White"
-                            Text="Clientes" 
+                            Text="Sucursales" 
                             HorizontalTextAlignment="Center" 
                             VerticalTextAlignment="Center" />
                     </ContentView>
@@ -68,11 +68,15 @@
                             <Label
                                 FontAttributes="Bold"        
                                 TextColor="{StaticResource FontColor}"
-                                Text="{Binding Names}">
+                                Text="{Binding ShipToName}">
                             </Label>                                    
                             <Label 
                                 TextColor="{StaticResource FontColor}"
                                 Text="{Binding City}">
+                            </Label>                                    
+                            <Label 
+                                TextColor="{StaticResource FontColor}"
+                                Text="{Binding Email}">
                             </Label>                                    
                         </StackLayout>        
                         <Image 

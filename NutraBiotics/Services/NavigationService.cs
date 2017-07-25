@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Views;
+    using Xamarin.Forms;
 
 	public class NavigationService
     {
@@ -10,10 +11,10 @@
             switch (pageName)
             {
 				case "MasterPage":
-					App.Current.MainPage = new MasterPage();
+                    Application.Current.MainPage = new MasterPage();
 					break;
 				case "LoginPage":
-					App.Current.MainPage = new LoginPage();
+					Application.Current.MainPage = new LoginPage();
 					break;
 			}
         }
@@ -33,7 +34,15 @@
 				case "SearchCustomerPage":
 					await App.Navigator.PushAsync(new SearchCustomerPage());
 					break;
+				case "SearchShipToPage":
+					await App.Navigator.PushAsync(new SearchShipToPage());
+					break;
 			}
+        }
+
+        public async Task Back()
+        {
+            await App.Navigator.PopAsync();
         }
     }
 }

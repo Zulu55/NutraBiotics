@@ -3,10 +3,12 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Threading.Tasks;
+    using System.Linq;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
+    using Helpers;
     using Models;
     using Services;
-    using Xamarin.Forms;
 
     public class SearchCustomerViewModel : INotifyPropertyChanged
     {
@@ -16,101 +18,120 @@
 
 		#region Services
 		DialogService dialogService;
-		ApiService apiService;
-		NetService netService;
 		NavigationService navigationService;
         #endregion
 
         #region Attributes
-        bool isRefreshing;
+        bool _isRefreshing;
+        ObservableCollection<Grouping<string, Customer>> _customers;
+        List<Customer> customers;
+        string _filter;
         #endregion
 
         #region Properties
-        public ObservableCollection<CustomerItemViewModel> Customers
-		{
-			get;
-			set;
-		}
-
-		public bool IsRefreshing
-		{
+        public ObservableCollection<Grouping<string, Customer>> Customers
+        {
 			set
 			{
-                if (isRefreshing != value)
+				if (_customers != value)
 				{
-					isRefreshing = value;
-					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRefreshing)));
+					_customers = value;
+					PropertyChanged?.Invoke(
+						this,
+						new PropertyChangedEventArgs(nameof(Customers)));
 				}
 			}
 			get
 			{
-				return isRefreshing;
+				return _customers;
 			}
 		}
-		#endregion
+
+        public bool IsRefreshing
+        {
+        	set
+        	{
+                if (_isRefreshing != value)
+        		{
+        			_isRefreshing = value;
+        			PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRefreshing)));
+        		}
+        	}
+        	get
+        	{
+        		return _isRefreshing;
+        	}
+        }
+
+        public string Filter
+        {
+			set
+			{
+				if (_filter != value)
+				{
+					_filter = value;
+                    if (string.IsNullOrEmpty(_filter))
+                    {
+                        ReloadCustomer();
+                    }
+                    else
+                    {
+                        Search();
+                    }
+
+                    PropertyChanged?.Invoke(
+						this,
+						new PropertyChangedEventArgs(nameof(Filter)));
+				}
+			}
+			get
+			{
+				return _filter;
+			}
+
+		}
+        #endregion
 
 		#region Constructors
-		public SearchCustomerViewModel()
+        public SearchCustomerViewModel(List<Customer> customers)
         {
-			dialogService = new DialogService();
-			apiService = new ApiService();
-			netService = new NetService();
-			navigationService = new NavigationService();
-			
-            Customers = new ObservableCollection<CustomerItemViewModel>();
+            this.customers = customers;
 
-            LoadCustomers();
-        }
+			dialogService = new DialogService();
+			navigationService = new NavigationService();
+
+            ReloadCustomer();
+		}
         #endregion
 
         #region Methods
-        async Task LoadCustomers()
+        void ReloadCustomer()
         {
-			var connection = await netService.CheckConnectivity();
-			if (!connection.IsSuccess)
-			{
-				await dialogService.ShowMessage("Error", connection.Message);
-				return;
-			}
-
-            IsRefreshing = true;
-
-			var url = Application.Current.Resources["URLAPI"].ToString();
-            var controller = "/api/Customers";
-			var response = await apiService.GetList<Customer>(url, controller);
-			if (!response.IsSuccess)
-			{
-				IsRefreshing = false;
-				await dialogService.ShowMessage("Error", response.Message);
-				return;
-			}
-
-            ReloadCustomer((List<Customer>)response.Result);
-
-            IsRefreshing = false;
+            Customers = new ObservableCollection<Grouping<string, Customer>>(
+            	customers
+            	.OrderBy(c => c.Names)
+            	.GroupBy(c => c.Names[0].ToString(), c => c)
+            	.Select(g => new Grouping<string, Customer>(g.Key, g)));
 		}
+        #endregion
 
-        void ReloadCustomer(List<Customer> customers)
+        #region Commands
+        public ICommand SearchCommand
         {
-            Customers.Clear();
-            foreach (var customer in customers)
-            {
-                Customers.Add(new CustomerItemViewModel 
-                { 
-                    Address = customer.Address,
-                    City = customer.City,
-                    Country = customer.Country,
-                    CreditHold = customer.CreditHold,
-                    CustomerId = customer.CustomerId,
-                    LastNames = customer.LastNames,
-                    Names = customer.Names,
-                    PhoneNum = customer.PhoneNum,
-                    State = customer.State,
-                    Terms = customer.Terms,
-                    TermsCode = customer.TermsCode,
-                });
-            }
+            get { return new RelayCommand(Search); }
         }
+
+        void Search()
+        {
+			Customers = new ObservableCollection<Grouping<string, Customer>>(
+				customers
+                .Where(c => c.Names.ToLower().Contains(Filter.ToLower()))
+				.OrderBy(c => c.Names)
+				.GroupBy(c => c.Names[0].ToString(), c => c)
+				.Select(g => new Grouping<string, Customer>(g.Key, g)));
+		}
         #endregion
     }
 }

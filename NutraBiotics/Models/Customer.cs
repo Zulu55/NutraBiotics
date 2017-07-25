@@ -1,35 +1,68 @@
 ﻿namespace NutraBiotics.Models
 {
-	using SQLite.Net.Attributes;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
+    using Services;
+    using SQLite.Net.Attributes;
+    using ViewModels;
 
-	public class Customer
+    public class Customer
     {
-        [PrimaryKey]
-		public int CustomerId { get; set; }
-		
-        public string Country { get; set; }
-		
-        public string State { get; set; }
-		
-        public string City { get; set; }
-		
-        public string Address { get; set; }
-		
-        public string PhoneNum { get; set; }
-		
-        public string Names { get; set; }
-		
-        public string LastNames { get; set; }
-		
-        public bool CreditHold { get; set; }
-		
-        public string TermsCode { get; set; }
-		
-        public string Terms { get; set; }
+        #region Services
+        NavigationService navigationService;
+        #endregion
 
-        public override int GetHashCode()
+        #region Properties
+        [PrimaryKey]
+        public int CustomerId { get; set; }
+
+        public string Country { get; set; }
+
+        public string State { get; set; }
+
+        public string City { get; set; }
+
+        public string Address { get; set; }
+
+        public string PhoneNum { get; set; }
+
+        public string Names { get; set; }
+
+        public string LastNames { get; set; }
+
+        public bool CreditHold { get; set; }
+
+        public string TermsCode { get; set; }
+
+        public string Terms { get; set; }
+        #endregion
+
+        #region Constructor
+        public Customer()
         {
-            return CustomerId;
+            navigationService = new NavigationService();
         }
+		#endregion
+
+		#region Methods
+		public override int GetHashCode()
+		{
+			return CustomerId;
+		}
+		#endregion
+
+		#region Commands
+		public ICommand SelectRecordCommand
+        {
+            get { return new RelayCommand(SelectRecord); }
+        }
+
+        async void SelectRecord()
+        {
+            var newOrderViewModel = NewOrderViewModel.GetInstance();
+            newOrderViewModel.Customer = this;
+            await navigationService.Back();
+        }
+        #endregion
     }
 }

@@ -43,6 +43,12 @@
             set;
         }
 
+        public SearchShipToViewModel SearchShipTo
+        {
+            get;
+            set;
+        }
+
         public ObservableCollection<MenuItemViewModel> Menu
         {
             get;
