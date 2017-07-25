@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="NutraBiotics.Views.SearchContactPage"
+    Title="Buscar Contacto"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding SearchContact}"
+            Padding="5">
+
+            <SearchBar
+                HeightRequest="60"
+                Placeholder="Buscar..."
+                Text="{Binding Filter, Mode=TwoWay}"
+                SearchCommand="{Binding SearchCommand}">
+            </SearchBar>
+
+            <ListView
+                CachingStrategy="RecycleElement"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                BackgroundColor="{StaticResource AccentColor1}"
+                SeparatorVisibility="Default"
+                ItemsSource="{Binding Contacts}"
+                IsGroupingEnabled="True"
+                GroupDisplayBinding="{Binding Key}"
+                GroupShortNameBinding="{Binding Key}"
+                HasUnevenRows="True">
+
+                <ListView.Header>
+                    <ContentView 
+                        Padding="0,5" 
+                        BackgroundColor="#3498db">
+                        <Label 
+                            FontSize="Large" 
+                            TextColor="White"
+                            Text="Contactos" 
+                            HorizontalTextAlignment="Center" 
+                            VerticalTextAlignment="Center" />
+                    </ContentView>
+                </ListView.Header>
+
+                <ListView.Footer>
+                    <ContentView 
+                        Padding="0,5" 
+                        BackgroundColor="#3498db">
+                        <Label 
+                            FontSize="Medium" 
+                            TextColor="White"
+                            Text="Fin de la lista" 
+                            HorizontalTextAlignment="Center" 
+                            VerticalTextAlignment="Center" />
+                    </ContentView>
+                </ListView.Footer>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout 
+                                    Grid.Column="0">
+                               <Label
+                                    FontAttributes="Bold"        
+                                    TextColor="{StaticResource FontColor}"
+                                    Text="{Binding Name}">
+                                </Label>
+                                <Label 
+                                    TextColor="{StaticResource FontColor}"
+                                    Text="{Binding PhoneNum}">
+                                </Label>
+                                <Label 
+                                    TextColor="{StaticResource FontColor}"
+                                    Text="{Binding Email}">
+                                </Label>
+                            </StackLayout>
+                            <Image 
+                                Grid.Column="1"
+                                Source="ic_chevron_right.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectRecordCommand}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

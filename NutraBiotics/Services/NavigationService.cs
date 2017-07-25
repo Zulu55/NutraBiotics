@@ -37,7 +37,10 @@
 				case "SearchShipToPage":
 					await App.Navigator.PushAsync(new SearchShipToPage());
 					break;
-			}
+				case "SearchContactPage":
+					await App.Navigator.PushAsync(new SearchContactPage());
+					break;
+            }
         }
 
         public async Task Back()

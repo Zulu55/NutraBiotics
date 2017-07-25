@@ -1,17 +1,17 @@
 ﻿namespace NutraBiotics.ViewModels
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Threading.Tasks;
-    using System.Windows.Input;
-    using GalaSoft.MvvmLight.Command;
-    using Models;
-    using Services;
-    using Xamarin.Forms;
-    using Data;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Threading.Tasks;
+	using System.Windows.Input;
+	using GalaSoft.MvvmLight.Command;
+	using Models;
+	using Services;
+	using Xamarin.Forms;
+	using Data;
 
-    public class DownloadViewModel : INotifyPropertyChanged
-    {
+	public class DownloadViewModel : INotifyPropertyChanged
+	{
 		#region Events
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
@@ -26,9 +26,9 @@
 
 		#region Attributes
 		double _progress;
-        bool _isRunning;
-        bool _isEnabled;
-        string _message;
+		bool _isRunning;
+		bool _isEnabled;
+		string _message;
 		#endregion
 
 		#region Properties
@@ -97,7 +97,6 @@
 		}
 		#endregion
 
-
 		#region Constructors
 		public DownloadViewModel()
 		{
@@ -105,98 +104,119 @@
 			apiService = new ApiService();
 			netService = new NetService();
 			dataService = new DataService();
-            navigationService = new NavigationService();
+			navigationService = new NavigationService();
 
 			IsEnabled = true;
 		}
-        #endregion
+		#endregion
 
-        #region Commands
-        public ICommand DownloadCommand
-        {
-            get { return new RelayCommand(Download); }
-        }
-
-        async void Download()
-        {
-            var answer = await dialogService.ShowConfirm(
-                "Confirmación",
-                "¿Está seguro de inicar una nueva descarga?");
-            if (!answer)
-            {
-                return;
-            }
-
-            var connection = await netService.CheckConnectivity();
-            if (!connection.IsSuccess)
-            {
-                await dialogService.ShowMessage("Error", connection.Message);
-                return;
-            }
-
-            await BeginDownload();
-        }
-        #endregion
-
-        #region Methods
-        async Task BeginDownload()
-        {
-            IsRunning = true;
-            IsEnabled = false;
-
-            Progress = 0;
-            int processes = 3 * 2;
-			var url = Application.Current.Resources["URLAPI"].ToString();
-
-			Message = "Descargando clientes...";
-			var customers = await DownloadMaster<Customer>(url, "/api/Customers");
-            Progress += (double)1 / processes;
-
-			Message = "Descargando sucursales...";
-			var shipTos = await DownloadMaster<ShipTo>(url, "/api/ShipToes");
-			Progress += (double)1 / processes;
-
-			Message = "Descargando contactos...";
-			var contacts = await DownloadMaster<Contact>(url, "/api/Contacts");
-			Progress += (double)1 / processes;
-
-			Message = "Guardando clientes localmente...";
-
-            if (customers != null && customers.Count > 0)
-            {
-                DeleteAndInsert(customers);
-				Progress += (double)1 / processes;
-			}
-
-			Message = "Guardando sucursales localmente...";
-
-			if (shipTos != null && shipTos.Count > 0)
-			{
-				DeleteAndInsert(shipTos);
-				Progress += (double)1 / processes;
-			}
-
-			Message = "Guardando contactos localmente...";
-
-			if (contacts != null && contacts.Count > 0)
-			{
-				DeleteAndInsert(contacts);
-				Progress += (double)1 / processes;
-			}
-
-			Message = "Proceso finalizado...";
-
-			IsRunning = false;
-			IsEnabled = true;
-
-            await dialogService.ShowMessage(
-                "Confirmación", 
-                "Proceso finalizado con éxito.");
-            await navigationService.Back();
+		#region Commands
+		public ICommand DownloadCommand
+		{
+			get { return new RelayCommand(Download); }
 		}
 
-        void DeleteAndInsert<T>(List<T> list) where T : class
-        {
+		async void Download()
+		{
+			var answer = await dialogService.ShowConfirm(
+				"Confirmación",
+				"¿Está seguro de inicar una nueva descarga?");
+			if (!answer)
+			{
+				return;
+			}
+
+			var connection = await netService.CheckConnectivity();
+			if (!connection.IsSuccess)
+			{
+				await dialogService.ShowMessage("Error", connection.Message);
+				return;
+			}
+
+			await BeginDownload();
+		}
+		#endregion
+
+		#region Methods
+		async Task BeginDownload()
+		{
+			try
+			{
+				IsRunning = true;
+				IsEnabled = false;
+
+				Progress = 0;
+				int processes = 7;
+				var url = Application.Current.Resources["URLAPI"].ToString();
+
+				Message = "Descargando clientes...";
+				var customers = await DownloadMaster<Customer>(url, "/api/Customers");
+				Progress += (double)1 / processes;
+
+				Message = "Descargando sucursales...";
+				var shipTos = await DownloadMaster<ShipTo>(url, "/api/ShipToes");
+				Progress += (double)1 / processes;
+
+				Message = "Descargando contactos...";
+				var contacts = await DownloadMaster<Contact>(url, "/api/Contacts");
+				Progress += (double)1 / processes;
+
+				Message = "Descargando Productos...";
+				var parts = await DownloadMaster<Part>(url, "/api/Parts");
+				Progress += (double)1 / processes;
+
+				Message = "Descargando lista de precios...";
+				var pricelist = await DownloadMaster<PriceList>(url, "/api/PriceLists");
+				Progress += (double)1 / processes;
+
+				Message = "Descargando lista de precios x parte...";
+				var pricelistpart = await DownloadMaster<PriceListPart>(url, "/api/PriceListsParts");
+				Progress += (double)1 / processes;
+
+				Message = "Descargando lista de precios x cliente...";
+				var customerpricelist = await DownloadMaster<CustomerPriceList>(url, "/api/CustomerPriceLists");
+				Progress += (double)1 / processes;
+
+
+				if (customers != null && customers.Count > 0)
+				{
+					DeleteAndInsert(customers);
+					Progress += (double)1 / processes;
+				}
+
+
+				if (shipTos != null && shipTos.Count > 0)
+				{
+					DeleteAndInsert(shipTos);
+					Progress += (double)1 / processes;
+				}
+
+
+				if (contacts != null && contacts.Count > 0)
+				{
+					DeleteAndInsert(contacts);
+					Progress += (double)1 / processes;
+				}
+
+				Message = "Proceso finalizado...";
+
+				IsRunning = false;
+				IsEnabled = true;
+
+				await dialogService.ShowMessage(
+					"Confirmación",
+					"Proceso finalizado con éxito.");
+				await navigationService.Back();
+			}
+			catch (System.Exception ex)
+			{
+
+				Message = ex.Message; ;
+			}
+		}
+
+		void DeleteAndInsert<T>(List<T> list) where T : class
+		{
 			using (var da = new DataAccess())
 			{
 				var oldRecords = da.GetList<T>(false);
@@ -212,16 +232,16 @@
 			}
 		}
 
-        async Task<List<T>> DownloadMaster<T>(string url, string controller) where T : class
-        {
+		async Task<List<T>> DownloadMaster<T>(string url, string controller) where T : class
+		{
 			var response = await apiService.GetList<T>(url, controller);
 			if (!response.IsSuccess)
 			{
 				Message = response.Message;
 			}
 
-            return (List<T>)response.Result;
+			return (List<T>)response.Result;
 		}
-        #endregion
-    }
+		#endregion
+	}
 }

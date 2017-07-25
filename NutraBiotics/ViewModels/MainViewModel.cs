@@ -49,6 +49,12 @@
             set;
         }
 
+		public SearchContactViewModel SearchContact
+		{
+			get;
+			set;
+		}
+
         public ObservableCollection<MenuItemViewModel> Menu
         {
             get;

@@ -86,6 +86,7 @@
                     Text="Contactos">
                 </Label>           
                 <Entry
+                    Text="{Binding Contact.Name, Mode=TwoWay}"
                     IsEnabled="false"
                     PlaceholderColor="{StaticResource FontColor}"
                     Placeholder="Seleccione un contacto..."

@@ -16,13 +16,18 @@
 		public DataAccess()
 		{
 			var config = DependencyService.Get<IConfig>();
-			connection = new SQLiteConnection(config.Platform,
+			connection = new SQLiteConnection(
+                config.Platform,
 				System.IO.Path.Combine(config.DirectoryDB, "Nutrabiotics.db3"));
 			connection.CreateTable<Contact>();
 			connection.CreateTable<Customer>();
 			connection.CreateTable<ShipTo>();
 			connection.CreateTable<User>();
-		}
+			connection.CreateTable<Part>();
+			connection.CreateTable<PriceList>();
+			connection.CreateTable<CustomerPriceList>();
+			connection.CreateTable<PriceListPart>();
+        }
 
 		public void Insert<T>(T model)
 		{
