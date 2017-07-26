@@ -2,6 +2,7 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:control="clr-namespace:NutraBiotics.Controls"
     x:Class="NutraBiotics.Views.NewOrderPage"
     Title="Nuevo Pedido"
     BackgroundColor="{StaticResource AccentColor1}"
@@ -12,6 +13,8 @@
             Padding="5">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -100,6 +103,55 @@
                     Grid.Column="2">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SearchContactCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    WidthRequest="80"
+                    TextColor="{StaticResource FontColor}"
+                    Text="Lista de precios">
+                </Label>           
+                <control:BindablePicker
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    WidthRequest="100"
+                    Title="Lista de precios..."
+                    DisplayMemberPath="ListDescription"
+                    SelectedValuePath="PriceListId"
+                    ItemsSource="{Binding PriceLists}"
+                    SelectedValue ="{Binding Path=PriceListId, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand">
+                </control:BindablePicker> 
+                
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    WidthRequest="80"
+                    TextColor="{StaticResource FontColor}"
+                    Text="Producto">
+                </Label>           
+                <Entry
+                    Completed="OnPartComplete"
+                    Text="{Binding Part.PartId, Mode=TwoWay}"
+                    PlaceholderColor="{StaticResource FontColor}"
+                    Placeholder="Ingrese ID de producto..."
+                    Grid.Row="4"
+                    Grid.Column="1">
+                </Entry>
+                <Image
+                    VerticalOptions="Center"
+                    Source="ic_search.png"
+                    Grid.Row="4"
+                    Grid.Column="2">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchProductCommand}"/>
                     </Image.GestureRecognizers>
                 </Image>
             </Grid>

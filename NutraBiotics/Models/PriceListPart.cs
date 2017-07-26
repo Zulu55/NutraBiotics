@@ -19,6 +19,18 @@
 
 		public decimal BasePrice { get; set; }
 
+        public int PriceRange
+        {
+            get 
+            {
+                if (BasePrice < 10000) return 1;
+				if (BasePrice < 30000) return 2;
+				if (BasePrice < 50000) return 3;
+				if (BasePrice < 100000) return 4;
+                return 5;
+			}
+        }
+
         public override int GetHashCode()
         {
             return PriceListPartId;

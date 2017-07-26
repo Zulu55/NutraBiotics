@@ -2,6 +2,7 @@
 {
 	using System.Collections.Generic;
 	using System.ComponentModel;
+    using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
 	using GalaSoft.MvvmLight.Command;
@@ -146,7 +147,7 @@
 				IsEnabled = false;
 
 				Progress = 0;
-				int processes = 7;
+				int processes = 7 * 2;
 				var url = Application.Current.Resources["URLAPI"].ToString();
 
 				Message = "Descargando clientes...";
@@ -181,24 +182,54 @@
 				if (customers != null && customers.Count > 0)
 				{
 					DeleteAndInsert(customers);
+					await Task.Delay(100);
 					Progress += (double)1 / processes;
 				}
-
 
 				if (shipTos != null && shipTos.Count > 0)
 				{
 					DeleteAndInsert(shipTos);
+					await Task.Delay(100);
 					Progress += (double)1 / processes;
 				}
-
 
 				if (contacts != null && contacts.Count > 0)
 				{
 					DeleteAndInsert(contacts);
+					await Task.Delay(100);
+					Progress += (double)1 / processes;
+				}
+
+				if (parts != null && parts.Count > 0)
+				{
+					DeleteAndInsert(parts);
+					await Task.Delay(100);
+					Progress += (double)1 / processes;
+				}
+
+				if (pricelist != null && pricelist.Count > 0)
+				{
+					DeleteAndInsert(pricelist);
+					await Task.Delay(100);
+					Progress += (double)1 / processes;
+				}
+
+				if (pricelistpart != null && pricelistpart.Count > 0)
+				{
+					DeleteAndInsert(pricelistpart);
+					await Task.Delay(100);
+					Progress += (double)1 / processes;
+				}
+
+				if (customerpricelist != null && customerpricelist.Count > 0)
+				{
+					DeleteAndInsert(customerpricelist);
+					await Task.Delay(100);
 					Progress += (double)1 / processes;
 				}
 
 				Message = "Proceso finalizado...";
+                Progress = 1;
 
 				IsRunning = false;
 				IsEnabled = true;

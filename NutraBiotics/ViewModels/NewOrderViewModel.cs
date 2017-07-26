@@ -1,8 +1,10 @@
 ﻿namespace NutraBiotics.ViewModels
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Models;
@@ -25,9 +27,44 @@
 		Customer _customer;
 		ShipTo _shipTo;
 		Contact _contact;
+        Part _part;
+        ObservableCollection<PriceList> _priceLists;
+        int _priceListId;
 		#endregion
 
 		#region Properties
+		public int PriceListId
+		{
+			set
+			{
+				if (_priceListId != value)
+				{
+					_priceListId = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceListId)));
+				}
+			}
+			get
+			{
+				return _priceListId;
+			}
+		}
+
+		public ObservableCollection<PriceList> PriceLists
+		{
+			set
+			{
+				if (_priceLists != value)
+				{
+					_priceLists = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceLists)));
+				}
+			}
+			get
+			{
+				return _priceLists;
+			}
+		}
+
 		public bool IsRunning
 		{
 			set
@@ -44,8 +81,8 @@
 			}
 		}
 
-        public Customer Customer
-        {
+		public Customer Customer
+		{
 			set
 			{
 				if (_customer != value)
@@ -57,6 +94,22 @@
 			get
 			{
 				return _customer;
+			}
+		}
+
+		public Part Part
+		{
+			set
+			{
+				if (_part != value)
+				{
+					_part = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Part)));
+				}
+			}
+			get
+			{
+				return _part;
 			}
 		}
 
@@ -101,6 +154,8 @@
             navigationService = new NavigationService();
             dialogService = new DialogService();
             dataService = new DataService();
+
+            PriceLists = new ObservableCollection<PriceList>();
         }
 		#endregion
 
@@ -111,9 +166,42 @@
 		{
 			return instance;
 		}
+        #endregion
+
+        #region Methods
+        public void LoadPriceLists()
+        {
+            var customerPriceLists = dataService
+                .Get<CustomerPriceList>(false)
+                .Where(cpl => cpl.CustomerId == Customer.CustomerId)
+                .ToList();
+
+            var priceLists = dataService.Get<PriceList>(false).ToList();
+
+            var qry = (from cpl in customerPriceLists
+                       join pl in priceLists on cpl.PriceListId equals pl.PriceListId
+                       where pl.Active
+                       select new { pl }).ToList();
+
+            var list = qry.Select(q => new PriceList
+            {
+                Active = q.pl.Active,
+                ListCode = q.pl.ListCode,
+                ListDescription = q.pl.ListDescription,
+                PriceListId = q.pl.PriceListId,
+            }).ToList();
+
+            PriceLists = new ObservableCollection<PriceList>(list);
+        }
+
+		public async Task PartCompleted()
+		{
+			await dialogService.ShowMessage("Taran", "Hijueputa!");
+		}
 		#endregion
 
 		#region Commands
+
 		public ICommand SearchCustomerCommand
         {
             get { return new RelayCommand(SearchCustomer); }

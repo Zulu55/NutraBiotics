@@ -61,6 +61,7 @@
         {
             var newOrderViewModel = NewOrderViewModel.GetInstance();
             newOrderViewModel.Customer = this;
+            newOrderViewModel.LoadPriceLists();
             await navigationService.Back();
         }
         #endregion

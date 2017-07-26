@@ -69,7 +69,18 @@
                                 FontAttributes="Bold"        
                                 TextColor="{StaticResource FontColor}"
                                 Text="{Binding Names}">
-                            </Label>                                    
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding CreditHold}"
+                                        Value="true">
+                                        <Setter
+                                            Property="TextColor"
+                                            Value="Red">
+                                        </Setter>        
+                                    </DataTrigger>
+                                </Label.Triggers>        
+                            </Label>                                   
                             <Label 
                                 TextColor="{StaticResource FontColor}"
                                 Text="{Binding City}">

@@ -3,6 +3,7 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using Interfaces;
     using Models;
     using Services;
     using Xamarin.Forms;
@@ -179,13 +180,22 @@
             user.Password = Password;
             dataService.DeleteAllAndInsert(user);
 
+			var deviceIdentifier = DependencyService
+            	.Get<IDevice>()
+            	.GetIdentifier();
 
-            var mainViewModel = MainViewModel.GetInstance();
+            await dialogService.ShowMessage(
+                "Nutrabiotics", 
+                string.Format(
+                    "Bienvenido {0}, su IMEI es: {1}", 
+                    user.FullName, 
+                    deviceIdentifier));
+
+			var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.User = user;
 
             navigationService.SetMainPage("MasterPage");
 		}
         #endregion
-
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="UniqueIdIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Logo.png" />

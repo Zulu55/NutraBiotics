@@ -6,7 +6,7 @@
     using Models;
     using ViewModels;
 
-	public partial class App : Application
+    public partial class App : Application
     {
         #region Attributes
         DataService dataService;
@@ -31,7 +31,7 @@
         {
             InitializeComponent();
 
-            dataService = new DataService();
+			dataService = new DataService();
 
             var user = dataService.First<User>(false);
             if (user != null && user.IsRemembered)
