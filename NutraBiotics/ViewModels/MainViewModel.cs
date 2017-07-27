@@ -55,6 +55,12 @@
 			set;
 		}
 
+        public SearchPriceListPartViewModel SearchPriceListPart
+        {
+            get;
+            set;
+        }
+
         public ObservableCollection<MenuItemViewModel> Menu
         {
             get;

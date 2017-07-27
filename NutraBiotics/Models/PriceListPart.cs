@@ -1,39 +1,63 @@
 ﻿namespace NutraBiotics.Models
 {
+    using System;
+    using System.Collections.Generic;
     using SQLite.Net.Attributes;
+    using NutraBiotics.Services;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
+    using NutraBiotics.ViewModels;
 
-	public class PriceListPart
+    public class PriceListPart
 	{
-		[PrimaryKey]
-		public int PriceListPartId { get; set; }
+        #region Services
+        NavigationService navigationService;
+        #endregion
 
-		public int PriceListId { get; set; }  //Clave foranea de pricelist
+        #region Properties
+        [PrimaryKey]
+        public int PriceListPartId { get; set; }
 
-		public string ListCode { get; set; }
+        public int PriceListId { get; set; } 
 
-		public int PartId { get; set; } //clave foranea de part
+        public string ListCode { get; set; }
 
-		public string PartNum { get; set; }
+        public int PartId { get; set; } 
 
-		public string PartDescription { get; set; }
+        public string PartNum { get; set; }
 
-		public decimal BasePrice { get; set; }
+        public string PartDescription { get; set; }
 
-        public int PriceRange
+        public decimal BasePrice { get; set; }
+
+        #endregion
+
+        #region Constructor
+        public PriceListPart()
         {
-            get 
-            {
-                if (BasePrice < 10000) return 1;
-				if (BasePrice < 30000) return 2;
-				if (BasePrice < 50000) return 3;
-				if (BasePrice < 100000) return 4;
-                return 5;
-			}
+            navigationService = new NavigationService();
         }
+        #endregion
 
+        #region Methods
         public override int GetHashCode()
         {
             return PriceListPartId;
+        } 
+        #endregion
+
+        #region Commands
+        public ICommand SelectRecordCommand
+        {
+            get { return new RelayCommand(SelectRecord); }
         }
-	}
+
+        async void SelectRecord()
+        {
+            var newOrderViewModel = NewOrderViewModel.GetInstance();
+            newOrderViewModel.PriceListPart = this;
+            await navigationService.Back();
+        }
+        #endregion
+    }
 }

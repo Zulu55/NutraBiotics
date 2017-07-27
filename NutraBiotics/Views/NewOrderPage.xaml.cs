@@ -17,5 +17,11 @@ namespace NutraBiotics.Views
             var newOrderViewModel = NewOrderViewModel.GetInstance();
             await newOrderViewModel.PartCompleted();
         }
-    }
+
+		void OnQuantityChanged(object sender, ValueChangedEventArgs e)
+		{
+			var newOrderViewModel = NewOrderViewModel.GetInstance();
+			newOrderViewModel.Quantity = (double)e.NewValue;
+		}
+	}
 }

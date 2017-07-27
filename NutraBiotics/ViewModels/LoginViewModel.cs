@@ -3,10 +3,10 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
-    using Interfaces;
     using Models;
     using Services;
     using Xamarin.Forms;
+    using Plugin.DeviceInfo;
 
     public class LoginViewModel : INotifyPropertyChanged
     {
@@ -180,16 +180,14 @@
             user.Password = Password;
             dataService.DeleteAllAndInsert(user);
 
-			var deviceIdentifier = DependencyService
-            	.Get<IDevice>()
-            	.GetIdentifier();
+            var deviceId = CrossDevice.Hardware.DeviceId;
 
             await dialogService.ShowMessage(
                 "Nutrabiotics", 
                 string.Format(
                     "Bienvenido {0}, su IMEI es: {1}", 
-                    user.FullName, 
-                    deviceIdentifier));
+                    user.FullName,
+                    deviceId));
 
 			var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.User = user;

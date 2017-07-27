@@ -40,6 +40,10 @@
 				case "SearchContactPage":
 					await App.Navigator.PushAsync(new SearchContactPage());
 					break;
+
+                case "SearchPriceListPartPage":
+                    await App.Navigator.PushAsync(new SearchPriceListPartPage());
+                    break;
             }
         }
 

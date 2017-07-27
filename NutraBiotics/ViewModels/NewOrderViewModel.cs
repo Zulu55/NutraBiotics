@@ -25,14 +25,83 @@
         #region Attributes
         bool _isRunning;
 		Customer _customer;
-		ShipTo _shipTo;
+        PriceListPart _pricelistpart;
+        ShipTo _shipTo;
 		Contact _contact;
         Part _part;
-        ObservableCollection<PriceList> _priceLists;
-        int _priceListId;
+        string _partNum;
+		ObservableCollection<PriceList> _priceLists;
+		ObservableCollection<GridOrderDetail> _gridOrderDetails;
+		int _priceListId;
+        double _quantity;
+        double _discount;
 		#endregion
 
 		#region Properties
+		public ObservableCollection<GridOrderDetail> GridOrderDetails
+		{
+			set
+			{
+				if (_gridOrderDetails != value)
+				{
+					_gridOrderDetails = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GridOrderDetails)));
+				}
+			}
+			get
+			{
+				return _gridOrderDetails;
+			}
+		}
+
+		public string PartNum
+		{
+			set
+			{
+				if (_partNum != value)
+				{
+					_partNum = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PartNum)));
+				}
+			}
+			get
+			{
+				return _partNum;
+			}
+		}
+
+		public double Quantity
+		{
+			set
+			{
+				if (_quantity != value)
+				{
+					_quantity = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Quantity)));
+				}
+			}
+			get
+			{
+				return _quantity;
+			}
+		}
+
+		public double Discount
+		{
+			set
+			{
+				if (_discount != value)
+				{
+					_discount = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Discount)));
+				}
+			}
+			get
+			{
+				return _discount;
+			}
+		}
+
 		public int PriceListId
 		{
 			set
@@ -97,7 +166,23 @@
 			}
 		}
 
-		public Part Part
+        public PriceListPart PriceListPart
+        {
+            set
+            {
+                if (_pricelistpart != value)
+                {
+                    _pricelistpart = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceListPart)));
+                }
+            }
+            get
+            {
+                return _pricelistpart;
+            }
+        }
+
+        public Part Part
 		{
 			set
 			{
@@ -144,19 +229,22 @@
 				return _contact;
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Constructors
-		public NewOrderViewModel()
+        #region Constructors
+        public NewOrderViewModel()
         {
             instance = this;
 
             navigationService = new NavigationService();
             dialogService = new DialogService();
             dataService = new DataService();
-
             PriceLists = new ObservableCollection<PriceList>();
-        }
+
+            GridOrderDetails = new ObservableCollection<GridOrderDetail>();
+
+			Quantity = 1;
+		}
 		#endregion
 
 		#region Singleton
@@ -194,15 +282,67 @@
             PriceLists = new ObservableCollection<PriceList>(list);
         }
 
-		public async Task PartCompleted()
+        public async Task PartCompleted()
 		{
-			await dialogService.ShowMessage("Taran", "Hijueputa!");
-		}
-		#endregion
+            var pricelistpart = dataService
+                   .Get<PriceListPart>(false)
+                   .Where(s => s.PriceListId == PriceListId && s.PartNum == PartNum)
+                   .FirstOrDefault();
+            
+            if (pricelistpart == null)
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "Codigo erroneo para esta lista de precios");
+                PriceListPart = null;
+                return;
+            }
+
+            PartNum = pricelistpart.PartNum;
+            PriceListPart = pricelistpart;
+        }
+		#endregion                                         
 
 		#region Commands
+        public ICommand AddProductToOrderCommand
+        {
+			get { return new RelayCommand(AddProductToOrder); }
+		}
 
-		public ICommand SearchCustomerCommand
+        async void AddProductToOrder()
+        {
+            if (PriceListPart == null)
+			{
+				await dialogService.ShowMessage(
+					"Error",
+					"Debe ingresar un producto.");
+				return;
+			}
+
+			if (Quantity <= 0)
+			{
+				await dialogService.ShowMessage(
+					"Error",
+					"Debe ingresar una cantidad mayor a cero.");
+				return;
+			}
+
+            GridOrderDetails.Add(new GridOrderDetail
+            {
+                BasePrice = PriceListPart.BasePrice,
+                Discount = Discount / 100,
+                PartDescription = PriceListPart.PartDescription,
+                PartNum = PriceListPart.PartNum,
+                Quantity = Quantity,
+            });
+
+            PartNum = null;
+            PriceListPart = null;
+            Quantity = 1;
+            Discount = 0;
+		}
+
+        public ICommand SearchCustomerCommand
         {
             get { return new RelayCommand(SearchCustomer); }
         }
@@ -305,6 +445,53 @@
 				return;
 			}
 		}
+
+        public ICommand SearchPriceListPartCommand
+        {
+            get { return new RelayCommand(SearchPriceListPart); }
+        }
+
+        async void SearchPriceListPart()
+        {
+            try
+            {
+                if (PriceLists == null)
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "Primero debes seleccionar una lista de precios.");
+                    return;
+                }
+
+                IsRunning = true;
+
+                var pricelistparts = dataService
+                    .Get<PriceListPart>(false)
+                    .Where(s => s.PriceListId == PriceListId)
+                    .ToList();
+                
+                IsRunning = false;
+
+                if (pricelistparts == null)
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "Debes descargar maestros o la lista de precios no tiene partes asociadas aun.");
+                    return;
+                }
+
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.SearchPriceListPart = new SearchPriceListPartViewModel(pricelistparts);
+                await navigationService.Navigate("SearchPriceListPartPage");
+            }
+            catch (Exception ex)
+            {
+                await dialogService.ShowMessage(
+                        "Error",
+                        ex.Message);
+                return;
+            }
+        }
         #endregion
     }
 }

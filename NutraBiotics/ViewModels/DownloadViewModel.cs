@@ -10,8 +10,9 @@
 	using Services;
 	using Xamarin.Forms;
 	using Data;
+    using System.Linq;
 
-	public class DownloadViewModel : INotifyPropertyChanged
+    public class DownloadViewModel : INotifyPropertyChanged
 	{
 		#region Events
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -150,71 +151,72 @@
 				int processes = 7 * 2;
 				var url = Application.Current.Resources["URLAPI"].ToString();
 
-				Message = "Descargando clientes...";
-				var customers = await DownloadMaster<Customer>(url, "/api/Customers");
-				Progress += (double)1 / processes;
+                Message = "Descargando clientes...";
+                var customers = await DownloadMaster<Customer>(url, "/api/Customers");
+                Progress += (double)1 / processes;
 
-				Message = "Descargando sucursales...";
-				var shipTos = await DownloadMaster<ShipTo>(url, "/api/ShipToes");
-				Progress += (double)1 / processes;
+                Message = "Descargando sucursales...";
+                var shipTos = await DownloadMaster<ShipTo>(url, "/api/ShipToes");
+                Progress += (double)1 / processes;
 
-				Message = "Descargando contactos...";
-				var contacts = await DownloadMaster<Contact>(url, "/api/Contacts");
-				Progress += (double)1 / processes;
+                Message = "Descargando contactos...";
+                var contacts = await DownloadMaster<Contact>(url, "/api/Contacts");
+                Progress += (double)1 / processes;
 
-				Message = "Descargando Productos...";
-				var parts = await DownloadMaster<Part>(url, "/api/Parts");
-				Progress += (double)1 / processes;
+                Message = "Descargando Productos...";
+                var parts = await DownloadMaster<Part>(url, "/api/Parts");
+                Progress += (double)1 / processes;
 
-				Message = "Descargando lista de precios...";
-				var pricelist = await DownloadMaster<PriceList>(url, "/api/PriceLists");
-				Progress += (double)1 / processes;
+                Message = "Descargando lista de precios...";
+                var pricelist = await DownloadMaster<PriceList>(url, "/api/PriceLists");
+                Progress += (double)1 / processes;
 
-				Message = "Descargando lista de precios x parte...";
-				var pricelistpart = await DownloadMaster<PriceListPart>(url, "/api/PriceListsParts");
+                Message = "Descargando lista de precios x parte...";
+				var pricelistpart = await DownloadMaster<PriceListPart>(url, "/api/PriceListParts");
 				Progress += (double)1 / processes;
 
 				Message = "Descargando lista de precios x cliente...";
 				var customerpricelist = await DownloadMaster<CustomerPriceList>(url, "/api/CustomerPriceLists");
 				Progress += (double)1 / processes;
 
+                Message = "Termino todas las descargas...";
 
-				if (customers != null && customers.Count > 0)
-				{
-					DeleteAndInsert(customers);
-					await Task.Delay(100);
-					Progress += (double)1 / processes;
-				}
+                if (customers != null && customers.Count > 0)
+                {
+                    DeleteAndInsert(customers);
+                    await Task.Delay(100);
+                    Progress += (double)1 / processes;
+                }
 
-				if (shipTos != null && shipTos.Count > 0)
-				{
-					DeleteAndInsert(shipTos);
-					await Task.Delay(100);
-					Progress += (double)1 / processes;
-				}
+                if (shipTos != null && shipTos.Count > 0)
+                {
+                    DeleteAndInsert(shipTos);
+                    await Task.Delay(100);
+                    Progress += (double)1 / processes;
+                }
 
-				if (contacts != null && contacts.Count > 0)
-				{
-					DeleteAndInsert(contacts);
-					await Task.Delay(100);
-					Progress += (double)1 / processes;
-				}
+                if (contacts != null && contacts.Count > 0)
+                {
+                    DeleteAndInsert(contacts);
+                    await Task.Delay(100);
+                    Progress += (double)1 / processes;
+                }
 
-				if (parts != null && parts.Count > 0)
-				{
-					DeleteAndInsert(parts);
-					await Task.Delay(100);
-					Progress += (double)1 / processes;
-				}
+                if (parts != null && parts.Count > 0)
+                {
+                    DeleteAndInsert(parts);
+                    await Task.Delay(100);
+                    Progress += (double)1 / processes;
+                }
 
-				if (pricelist != null && pricelist.Count > 0)
-				{
-					DeleteAndInsert(pricelist);
-					await Task.Delay(100);
-					Progress += (double)1 / processes;
-				}
+                if (pricelist != null && pricelist.Count > 0)
+                {
+                    DeleteAndInsert(pricelist);
+                    await Task.Delay(100);
+                    Progress += (double)1 / processes;
+                }
 
-				if (pricelistpart != null && pricelistpart.Count > 0)
+                if (pricelistpart != null && pricelistpart.Count > 0)
 				{
 					DeleteAndInsert(pricelistpart);
 					await Task.Delay(100);
@@ -228,7 +230,7 @@
 					Progress += (double)1 / processes;
 				}
 
-				Message = "Proceso finalizado...";
+                Message = "Proceso finalizado...";
                 Progress = 1;
 
 				IsRunning = false;

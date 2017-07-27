@@ -8,156 +8,280 @@
     BackgroundColor="{StaticResource AccentColor1}"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
 	<ContentPage.Content>
-        <StackLayout
-            BindingContext="{Binding NewOrder}"
-            Padding="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="2.2*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>    
-                
-                <Label
-                    VerticalOptions="Center"
-                    HorizontalOptions="End"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    WidthRequest="80"
-                    TextColor="{StaticResource FontColor}"
-                    Text="Cliente">
-                </Label>           
-                <Entry
-                    Text="{Binding Customer.Names, Mode=TwoWay}"
-                    IsEnabled="false"
-                    PlaceholderColor="{StaticResource FontColor}"
-                    Placeholder="Seleccione un cliente..."
-                    Grid.Row="0"
-                    Grid.Column="1">
-                </Entry>
-                <Image
-                    VerticalOptions="Center"
-                    Source="ic_search.png"
-                    Grid.Row="0"
-                    Grid.Column="2">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchCustomerCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
-                
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="End"
-                    WidthRequest="80"
-                    TextColor="{StaticResource FontColor}"
-                    Text="Sucursal">
-                </Label>           
-                <Entry
-                    Text="{Binding ShipTo.ShipToName, Mode=TwoWay}"
-                    IsEnabled="false"
-                    PlaceholderColor="{StaticResource FontColor}"
-                    Placeholder="Seleccione una sucursal..."
-                    Grid.Row="1"
-                    Grid.Column="1">
-                </Entry>
-                <Image
-                    VerticalOptions="Center"
-                    Source="ic_search.png"
-                    Grid.Row="1"
-                    Grid.Column="2">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchShipToCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+        <ScrollView>
+            <StackLayout
+                BindingContext="{Binding NewOrder}"
+                Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>    
+                    
+                    <Label
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        WidthRequest="80"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Cliente">
+                    </Label>           
+                    <Entry
+                        Text="{Binding Customer.Names, Mode=TwoWay}"
+                        IsEnabled="false"
+                        PlaceholderColor="{StaticResource FontColor}"
+                        Placeholder="Seleccione un cliente..."
+                        Grid.Row="0"
+                        Grid.Column="1">
+                    </Entry>
+                    <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png"
+                        Grid.Row="0"
+                        Grid.Column="2">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchCustomerCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        WidthRequest="80"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Sucursal">
+                    </Label>           
+                    <Entry
+                        Text="{Binding ShipTo.ShipToName, Mode=TwoWay}"
+                        IsEnabled="false"
+                        PlaceholderColor="{StaticResource FontColor}"
+                        Placeholder="Seleccione una sucursal..."
+                        Grid.Row="1"
+                        Grid.Column="1">
+                    </Entry>
+                    <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png"
+                        Grid.Row="1"
+                        Grid.Column="2">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchShipToCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
 
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="End"
-                    WidthRequest="80"
-                    TextColor="{StaticResource FontColor}"
-                    Text="Contactos">
-                </Label>           
-                <Entry
-                    Text="{Binding Contact.Name, Mode=TwoWay}"
-                    IsEnabled="false"
-                    PlaceholderColor="{StaticResource FontColor}"
-                    Placeholder="Seleccione un contacto..."
-                    Grid.Row="2"
-                    Grid.Column="1">
-                </Entry>
-                <Image
-                    VerticalOptions="Center"
-                    Source="ic_search.png"
-                    Grid.Row="2"
-                    Grid.Column="2">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchContactCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        WidthRequest="80"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Contactos">
+                    </Label>           
+                    <Entry
+                        Text="{Binding Contact.Name, Mode=TwoWay}"
+                        IsEnabled="false"
+                        PlaceholderColor="{StaticResource FontColor}"
+                        Placeholder="Seleccione un contacto..."
+                        Grid.Row="2"
+                        Grid.Column="1">
+                    </Entry>
+                    <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png"
+                        Grid.Row="2"
+                        Grid.Column="2">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchContactCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
 
-                <Label
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="End"
-                    WidthRequest="80"
-                    TextColor="{StaticResource FontColor}"
-                    Text="Lista de precios">
-                </Label>           
-                <control:BindablePicker
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    WidthRequest="100"
-                    Title="Lista de precios..."
-                    DisplayMemberPath="ListDescription"
-                    SelectedValuePath="PriceListId"
-                    ItemsSource="{Binding PriceLists}"
-                    SelectedValue ="{Binding Path=PriceListId, Mode=TwoWay}"
-                    HorizontalOptions="FillAndExpand">
-                </control:BindablePicker> 
-                
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="End"
-                    WidthRequest="80"
-                    TextColor="{StaticResource FontColor}"
-                    Text="Producto">
-                </Label>           
-                <Entry
-                    Completed="OnPartComplete"
-                    Text="{Binding Part.PartId, Mode=TwoWay}"
-                    PlaceholderColor="{StaticResource FontColor}"
-                    Placeholder="Ingrese ID de producto..."
-                    Grid.Row="4"
-                    Grid.Column="1">
-                </Entry>
-                <Image
-                    VerticalOptions="Center"
-                    Source="ic_search.png"
-                    Grid.Row="4"
-                    Grid.Column="2">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchProductCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
-            </Grid>
-            <ActivityIndicator
-                IsRunning="{Binding IsRunning, Mode=TwoWay}">
-            </ActivityIndicator>
-        </StackLayout>
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        WidthRequest="80"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Lista de precios">
+                    </Label>           
+                    <control:BindablePicker
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        WidthRequest="100"
+                        Title="Lista de precios..."
+                        DisplayMemberPath="ListDescription"
+                        SelectedValuePath="PriceListId"
+                        ItemsSource="{Binding PriceLists}"
+                        SelectedValue ="{Binding Path=PriceListId, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand">
+                    </control:BindablePicker>    
+                    
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        WidthRequest="80"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Producto">
+                    </Label>           
+                    <Entry
+                        Completed="OnPartComplete"
+                        Text="{Binding PartNum, Mode=TwoWay}"
+                        PlaceholderColor="{StaticResource FontColor}"
+                        Placeholder="Ingrese numero de parte..."
+                        Grid.Row="4"
+                        Grid.Column="1">
+                    </Entry>
+                    <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png"
+                        Grid.Row="4"
+                        Grid.Column="2">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchPriceListPartCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    
+                    <Label
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        Text="{Binding PriceListPart.PartDescription, Mode=TwoWay}"
+                        IsEnabled="False">
+                    </Label>
+
+                    <StackLayout
+                        Orientation="Horizontal"
+                        Grid.Row="6"
+                        Grid.ColumnSpan="3"
+                        Grid.Column="0">
+                        <Entry
+                            HorizontalOptions="FillAndExpand"
+                            Completed="OnPartComplete"
+                            Text="{Binding Quantity, Mode=TwoWay}"
+                            PlaceholderColor="{StaticResource FontColor}"
+                            Keyboard="Numeric"
+                            Placeholder="Cantidad...">
+                        </Entry>
+                        <Stepper
+                            Value="{Binding Quantity}"
+                            Increment="1"
+                            Minimum="0"
+                            Maximum="999999"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            ValueChanged="OnQuantityChanged">
+                        </Stepper>
+                        <Image
+                            VerticalOptions="Center"
+                            Source="ic_add.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AddProductToOrderCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    
+                    <Label
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        WidthRequest="80"
+                        TextColor="{StaticResource FontColor}"
+                        Text="% Dcto">
+                    </Label>           
+                    <Entry
+                        Completed="OnPartComplete"
+                        Text="{Binding Discount, Mode=TwoWay}"
+                        PlaceholderColor="{StaticResource FontColor}"
+                        Placeholder="Ingrese % Dcto..."
+                        Grid.Row="7"
+                        Grid.Column="1">
+                    </Entry>
+                </Grid>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                </ActivityIndicator>
+
+                <StackLayout
+                    Padding="5">
+                    <ListView
+                        BackgroundColor="White"
+                        SeparatorVisibility="Default"
+                        ItemsSource="{Binding GridOrderDetails}"
+                        HasUnevenRows="True">   
+                        <ListView.ItemTemplate>
+                          <DataTemplate>
+                            <ViewCell>
+                              <Grid>
+                                <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout>
+                                    <Label
+                                        FontSize="Medium"
+                                        BackgroundColor="Navy"
+                                        FontAttributes="Bold"                                                
+                                        TextColor="White"       
+                                        VerticalOptions="Center"
+                                        Text="{Binding PartDescription}">
+                                    </Label>
+                                    <StackLayout
+                                        Orientation="Horizontal">
+                                        <StackLayout
+                                            HorizontalOptions="StartAndExpand"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                TextColor="{StaticResource FontColor}"       
+                                                Text="{Binding PartNum, StringFormat='Parte: {0}'}">
+                                            </Label>
+                                            <Label
+                                                TextColor="{StaticResource FontColor}"       
+                                                Text="{Binding Quantity, StringFormat='Cantidad: {0:N2}'}">
+                                            </Label>
+                                            <Label
+                                                TextColor="{StaticResource FontColor}"       
+                                                Text="{Binding Discount, StringFormat='% Dcto: {0:P2}'}">
+                                            </Label>
+                                        </StackLayout>        
+                                        <Label
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Center"       
+                                            FontSize="Large"
+                                            FontAttributes="Bold"                                                
+                                            TextColor="{StaticResource FontColor}"       
+                                            Text="{Binding Value, StringFormat='{0:C2}'}">
+                                        </Label>
+                                    </StackLayout>        
+                                </StackLayout>        
+                              </Grid>
+                            </ViewCell>
+                          </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
 	</ContentPage.Content>
 </ContentPage>
