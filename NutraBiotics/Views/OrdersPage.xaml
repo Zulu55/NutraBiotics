@@ -14,13 +14,47 @@
     </ContentPage.ToolbarItems>
 	<ContentPage.Content>
         <StackLayout
-            VerticalOptions="Center"
-            HorizontalOptions="Center">
-            <Label
-                FontSize="Large"
-                TextColor="{StaticResource FontColor}"
-                Text="Orders">
-            </Label>
+            BindingContext="{Binding Orders}"
+            Padding="8">
+            <ListView
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                BackgroundColor="White"
+                SeparatorVisibility="Default"
+                ItemsSource="{Binding OrderList}"
+                HasUnevenRows="True">   
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label 
+                            Grid.Column="0"
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            Text="{Binding Customer.Names}">
+                        </Label>
+                        <Label 
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            Text="{Binding Date, StringFormat='{0:yyyy/MM/dd}'}">
+                        </Label>
+                        <Label 
+                            HorizontalTextAlignment="End"        
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            Text="{Binding Total, StringFormat='{0:C2}'}">
+                        </Label>
+                      </Grid>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

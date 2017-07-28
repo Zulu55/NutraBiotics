@@ -28,8 +28,8 @@
 				case "DownloadPage":
 					await App.Navigator.PushAsync(new DownloadPage());
 					break;
-				case "NewOrderPage":
-					await App.Navigator.PushAsync(new NewOrderPage());
+				case "NewOrderTab":
+					await App.Navigator.PushAsync(new NewOrderTab());
 					break;
 				case "SearchCustomerPage":
 					await App.Navigator.PushAsync(new SearchCustomerPage());

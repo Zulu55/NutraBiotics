@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TabbedPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:tabs="clr-namespace:NutraBiotics.Views;assembly=NutraBiotics"
+    x:Class="NutraBiotics.Views.NewOrderTab"
+    Title="Nuevo Pedido"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem 
+            Command="{Binding SaveOrderCommand}"
+            Icon="ic_save.png">
+        </ToolbarItem>
+        <ToolbarItem 
+            Command="{Binding DeleteOrderCommand}"
+            Icon="ic_delete_forever.png">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+
+    <TabbedPage.Children>
+        <tabs:NewOrderPage/>
+        <tabs:NewOrderDetailPage/>
+    </TabbedPage.Children>
+</TabbedPage>

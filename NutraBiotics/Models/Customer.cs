@@ -1,9 +1,11 @@
 ﻿namespace NutraBiotics.Models
 {
+    using System.Collections.Generic;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Services;
     using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
     using ViewModels;
 
     public class Customer
@@ -35,10 +37,13 @@
         public string TermsCode { get; set; }
 
         public string Terms { get; set; }
-        #endregion
 
-        #region Constructor
-        public Customer()
+		[OneToMany(CascadeOperations = CascadeOperation.CascadeRead)]
+		public List<OrderHeader> OrderHeaders { get; set; }
+		#endregion
+
+		#region Constructor
+		public Customer()
         {
             navigationService = new NavigationService();
         }

@@ -27,7 +27,9 @@
 			connection.CreateTable<PriceList>();
 			connection.CreateTable<CustomerPriceList>();
 			connection.CreateTable<PriceListPart>();
-        }
+			connection.CreateTable<OrderHeader>();
+			connection.CreateTable<OrderDetail>();
+		}
 
 		public void Insert<T>(T model)
 		{

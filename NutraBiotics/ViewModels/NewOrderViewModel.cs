@@ -35,9 +35,26 @@
 		int _priceListId;
         double _quantity;
         double _discount;
+        decimal _total;
 		#endregion
 
 		#region Properties
+		public decimal Total
+		{
+			set
+			{
+				if (_total != value)
+				{
+					_total = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Total)));
+				}
+			}
+			get
+			{
+				return _total;
+			}
+		}
+
 		public ObservableCollection<GridOrderDetail> GridOrderDetails
 		{
 			set
@@ -333,6 +350,7 @@
                 Discount = Discount / 100,
                 PartDescription = PriceListPart.PartDescription,
                 PartNum = PriceListPart.PartNum,
+                PartId = PriceListPart.PartId,
                 Quantity = Quantity,
             });
 
@@ -340,6 +358,7 @@
             PriceListPart = null;
             Quantity = 1;
             Discount = 0;
+            Total = GridOrderDetails.Sum(god => god.Value);
 		}
 
         public ICommand SearchCustomerCommand

@@ -56,6 +56,12 @@
     <EmbeddedResource Include="Views\SearchContactPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\NewOrderTab.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NewOrderDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -124,6 +130,13 @@
     <Compile Include="Models\Part.cs" />
     <Compile Include="Controls\BindablePicker.cs" />
     <Compile Include="Models\GridOrderDetail.cs" />
+    <Compile Include="Views\NewOrderTab.xaml.cs">
+      <DependentUpon>NewOrderTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewOrderDetailPage.xaml.cs">
+      <DependentUpon>NewOrderDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\OrdersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin.DeviceInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

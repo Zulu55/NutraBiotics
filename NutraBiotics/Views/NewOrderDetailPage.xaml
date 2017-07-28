@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="NutraBiotics.Views.NewOrderDetailPage"
+    Title="Pedido"
+    Icon="ic_list.png"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+	<ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding NewOrder}"
+            Padding="5">
+            <ListView
+                BackgroundColor="White"
+                SeparatorVisibility="Default"
+                ItemsSource="{Binding GridOrderDetails}"
+                HasUnevenRows="True"> 
+
+                <ListView.Footer>
+                    <ContentView 
+                        Padding="0,5" 
+                        BackgroundColor="#3498db">
+                        <Label 
+                            FontSize="Large"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            Text="{Binding Total, StringFormat='Total: {0:C2}'}" 
+                            HorizontalTextAlignment="End" 
+                            VerticalTextAlignment="Center" />
+                    </ContentView>
+                </ListView.Footer>
+
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <ViewCell.ContextActions>
+                        <MenuItem 
+                           Command="{Binding EditProductCommand}" 
+                           Text="Editar">
+                        </MenuItem>
+                        <MenuItem 
+                           Command="{Binding DeleteProductCommand}" 
+                           IsDestructive="true"     
+                           Text="Eliminar">
+                        </MenuItem>
+                      </ViewCell.ContextActions>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+                            <Label
+                                FontSize="Medium"
+                                BackgroundColor="Navy"
+                                FontAttributes="Bold"                                                
+                                TextColor="White"       
+                                VerticalOptions="Center"
+                                Text="{Binding PartDescription}">
+                            </Label>
+                            <StackLayout
+                                Orientation="Horizontal">
+                                <StackLayout
+                                    HorizontalOptions="StartAndExpand"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        TextColor="{StaticResource FontColor}"       
+                                        Text="{Binding PartNum, StringFormat='Parte: {0}'}">
+                                    </Label>
+                                    <Label
+                                        TextColor="{StaticResource FontColor}"       
+                                        Text="{Binding Quantity, StringFormat='Cantidad: {0:N2}'}">
+                                    </Label>
+                                    <Label
+                                        TextColor="{StaticResource FontColor}"       
+                                        Text="{Binding Discount, StringFormat='% Dcto: {0:P2}'}">
+                                    </Label>
+                                </StackLayout>        
+                                <Label
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"       
+                                    FontSize="Large"
+                                    FontAttributes="Bold"                                                
+                                    TextColor="{StaticResource FontColor}"       
+                                    Text="{Binding Value, StringFormat='{0:C2}'}">
+                                </Label>
+                            </StackLayout>        
+                        </StackLayout>        
+                      </Grid>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

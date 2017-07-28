@@ -1,15 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
-
-namespace NutraBiotics.Views
+﻿namespace NutraBiotics.Views
 {
-    public partial class OrdersPage : ContentPage
+    using System;
+	using System.Collections.Generic;
+	using Xamarin.Forms;
+    using ViewModels;
+
+	public partial class OrdersPage : ContentPage
     {
         public OrdersPage()
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var ordersViewModel = OrdersViewModel.GetInstance();
+            ordersViewModel.RefreshOrders();
+		}
     }
 }

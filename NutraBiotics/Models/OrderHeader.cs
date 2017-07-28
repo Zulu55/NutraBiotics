@@ -1,11 +1,14 @@
 ﻿namespace NutraBiotics.Models
 {
     using System;
-	using SQLite.Net.Attributes;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
 
-	public class OrderHeader
+    public class OrderHeader
 	{
-		[PrimaryKey]
+		[PrimaryKey, AutoIncrement]
 		public int SalesOrderHeaderId { get; set; }
 
 		public int UserId { get; set; }
@@ -26,7 +29,28 @@
 
 		public string Observations { get; set; }
 
-        public override int GetHashCode()
+		public bool IsSync { get; set; }
+
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+		public List<OrderDetail> OrderDetails { get; set; }
+
+        public decimal Total
+        {
+            get 
+            {
+                if (OrderDetails == null)
+                {
+                    return 0;
+                }
+
+                return OrderDetails.Sum(od => od.Value);
+            }
+        }
+
+		[ManyToOne]
+		public Customer Customer { get; set; }
+
+		public override int GetHashCode()
         {
             return SalesOrderHeaderId;
         }

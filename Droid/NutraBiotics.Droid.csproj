@@ -168,6 +168,9 @@
     <AndroidResource Include="Resources\drawable\ic_search.png" />
     <AndroidResource Include="Resources\drawable\ic_chevron_right.png" />
     <AndroidResource Include="Resources\drawable\ic_add.png" />
+    <AndroidResource Include="Resources\drawable\ic_list.png" />
+    <AndroidResource Include="Resources\drawable\ic_save.png" />
+    <AndroidResource Include="Resources\drawable\ic_delete_forever.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\addOrder.png" />

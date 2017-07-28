@@ -188,6 +188,9 @@
     <BundleResource Include="Resources\ic_search.png" />
     <BundleResource Include="Resources\ic_chevron_right.png" />
     <BundleResource Include="Resources\ic_add.png" />
+    <BundleResource Include="Resources\ic_list.png" />
+    <BundleResource Include="Resources\ic_delete_forever.png" />
+    <BundleResource Include="Resources\ic_save.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\addProduct.png" />
