@@ -191,7 +191,7 @@
 
 			var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.User = user;
-
+            mainViewModel.Orders = new OrdersViewModel();
             navigationService.SetMainPage("MasterPage");
 		}
         #endregion

@@ -171,6 +171,7 @@
     <AndroidResource Include="Resources\drawable\ic_list.png" />
     <AndroidResource Include="Resources\drawable\ic_save.png" />
     <AndroidResource Include="Resources\drawable\ic_delete_forever.png" />
+    <AndroidResource Include="Resources\drawable\ic_sync.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\addOrder.png" />

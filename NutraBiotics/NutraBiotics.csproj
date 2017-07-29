@@ -137,6 +137,8 @@
       <DependentUpon>NewOrderDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\OrdersViewModel.cs" />
+    <Compile Include="Models\SynOrderHeaderRequest.cs" />
+    <Compile Include="Models\SynOrderDetailRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin.DeviceInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

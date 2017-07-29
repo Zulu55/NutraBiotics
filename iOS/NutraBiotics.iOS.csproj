@@ -191,6 +191,7 @@
     <BundleResource Include="Resources\ic_list.png" />
     <BundleResource Include="Resources\ic_delete_forever.png" />
     <BundleResource Include="Resources\ic_save.png" />
+    <BundleResource Include="Resources\ic_sync.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\addProduct.png" />

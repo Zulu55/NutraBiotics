@@ -11,6 +11,10 @@
             Command="{Binding NewOrderCommand}"
             Icon="ic_add_circle_outline.png">
         </ToolbarItem>
+        <ToolbarItem 
+            Command="{Binding SyncOrdersCommand}"
+            Icon="ic_sync.png">
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 	<ContentPage.Content>
         <StackLayout
@@ -25,29 +29,63 @@
                 <ListView.ItemTemplate>
                   <DataTemplate>
                     <ViewCell>
+                      <ViewCell.ContextActions>
+                        <MenuItem 
+                           Command="{Binding EditOrderCommand}" 
+                           Text="Editar">
+                        </MenuItem>
+                        <MenuItem 
+                           Command="{Binding DeleteOrderCommand}" 
+                           IsDestructive="true"     
+                           Text="Eliminar">
+                        </MenuItem>
+                      </ViewCell.ContextActions>
                       <Grid>
                         <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="*"></ColumnDefinition>
-                          <ColumnDefinition Width="*"></ColumnDefinition>
+                          <ColumnDefinition Width="2*"></ColumnDefinition>
                           <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label 
-                            Grid.Column="0"
-                            VerticalOptions="Center"
-                            TextColor="White"
-                            Text="{Binding Customer.Names}">
-                        </Label>
-                        <Label 
-                            Grid.Column="1"
-                            VerticalOptions="Center"
-                            TextColor="White"
-                            Text="{Binding Date, StringFormat='{0:yyyy/MM/dd}'}">
-                        </Label>
+                        <StackLayout 
+                            Margin="5,0,0,0"        
+                            Grid.Column="0">
+                            <Label
+                                FontSize="Medium"
+                                FontAttributes="Bold"       
+                                VerticalOptions="Center"
+                                TextColor="{StaticResource FontColor}"
+                                Text="{Binding Customer.Names}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding IsSync}"
+                                        Value="true">
+                                        <Setter
+                                            Property="TextColor"
+                                            Value="Green">
+                                        </Setter>        
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding IsSync}"
+                                        Value="false">
+                                        <Setter
+                                            Property="TextColor"
+                                            Value="Red">
+                                        </Setter>        
+                                    </DataTrigger>
+                                </Label.Triggers>                             </Label>
+                            <Label 
+                                Margin="0,0,5,0"        
+                                VerticalOptions="Center"
+                                TextColor="{StaticResource FontColor}"
+                                Text="{Binding Date, StringFormat='{0:yyyy/MM/dd}'}">
+                            </Label>
+                        </StackLayout>        
                         <Label 
                             HorizontalTextAlignment="End"        
                             Grid.Column="1"
                             VerticalOptions="Center"
-                            TextColor="White"
+                            TextColor="{StaticResource FontColor}"
                             Text="{Binding Total, StringFormat='{0:C2}'}">
                         </Label>
                       </Grid>

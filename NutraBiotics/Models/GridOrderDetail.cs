@@ -15,6 +15,8 @@
 		#region Properties
 		public int PartId { get; set; }
 
+		public int PriceListPartId { get; set; }
+
 		public string PartNum { get; set; }
 
         public string PartDescription { get; set; }

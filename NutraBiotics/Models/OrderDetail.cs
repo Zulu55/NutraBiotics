@@ -8,9 +8,12 @@
 		[PrimaryKey, AutoIncrement]
 		public int SalesOrderDetaliId { get; set; }
 
-		public int SalesOrderHeaderId { get; set; }
+        [ForeignKey(typeof(OrderHeader))]
+        public int SalesOrderHeaderId { get; set; }
 
 		public int PartId { get; set; }
+
+		public int PriceListPartId { get; set; }
 
 		public int OrderLine { get; set; }
 

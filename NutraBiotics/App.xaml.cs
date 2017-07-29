@@ -38,6 +38,7 @@
             {
                 var mainViewModel = MainViewModel.GetInstance();
                 mainViewModel.User = user;
+                mainViewModel.Orders = new OrdersViewModel();
                 MainPage = new MasterPage();
             }
             else

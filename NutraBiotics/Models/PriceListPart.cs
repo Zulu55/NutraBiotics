@@ -56,6 +56,7 @@
         {
             var newOrderViewModel = NewOrderViewModel.GetInstance();
             newOrderViewModel.PriceListPart = this;
+            newOrderViewModel.PartNum = PartNum;
             await navigationService.Back();
         }
         #endregion

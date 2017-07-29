@@ -351,6 +351,7 @@
                 PartDescription = PriceListPart.PartDescription,
                 PartNum = PriceListPart.PartNum,
                 PartId = PriceListPart.PartId,
+                PriceListPartId = PriceListPart.PriceListPartId,
                 Quantity = Quantity,
             });
 

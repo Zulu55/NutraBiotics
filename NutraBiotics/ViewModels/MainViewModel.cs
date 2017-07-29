@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Models;
     using Services;
+    using Xamarin.Forms;
 
     public class MainViewModel
     {
@@ -13,6 +15,7 @@
 		NavigationService navigationService;
 		DialogService dialogService;
 		DataService dataService;
+		ApiService apiService;
 		#endregion
 
 		#region Properties
@@ -85,6 +88,7 @@
             navigationService = new NavigationService();
             dialogService = new DialogService();
             dataService = new DataService();
+            apiService = new ApiService();
 
             Login = new LoginViewModel();
 
@@ -155,6 +159,62 @@
         #endregion
 
         #region Commands
+        public ICommand SyncOrdersCommand
+        {
+			get { return new RelayCommand(SyncOrders); }
+		}
+
+        async void SyncOrders()
+        {
+            var ordersPendingToSync = dataService
+                .Get<OrderHeader>(true)
+                .Where(o => !o.IsSync)
+                .ToList();
+
+            if (ordersPendingToSync.Count == 0)
+            {
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "No tines ordenes pendientes por sincronizar");
+                return;
+            }
+
+            var answer = await dialogService.ShowConfirm(
+                "Confirmación", 
+                "¿Está seguro de sincronizar las órdenes pendientes?");
+
+            if (!answer)
+            {
+                return;
+            }
+
+            Orders.IsRefreshing = true;
+            var url = Application.Current.Resources["URLAPI"].ToString();
+            var controller = "/api/OrderHeaders";
+            var response = await apiService.SyncOrder(
+                url, 
+                controller, 
+                ordersPendingToSync);
+            Orders.IsRefreshing = false;
+
+			if (!response.IsSuccess)
+            {
+                await dialogService.ShowMessage("Error", response.Message);
+                return;
+            }
+
+            foreach (var order in ordersPendingToSync)
+            {
+                order.IsSync = true;
+                dataService.Update(order);
+            }
+
+            Orders.RefreshOrders();
+			await dialogService.ShowMessage(
+                "Confirmación", 
+                "Órdenes sincronizadas Ok");
+		}
+
         public ICommand SaveOrderCommand
         {
 			get { return new RelayCommand(SaveOrder); }
@@ -252,6 +312,7 @@
                         OrderLine = ++i,
                         OrderQty = detail.Quantity,
                         PartId = detail.PartId,
+                        PriceListPartId = detail.PriceListPartId,
                         PartNum = detail.PartNum,
                         SalesOrderHeaderId = orderHeader.SalesOrderHeaderId,
                         TaxAmt = 0,
